@@ -57,7 +57,8 @@ apt install -y \
 	unzip \
 	i3blocks \
 	dconf-editor \
-	python3-pip
+	python3-pip \
+	dbus-x11
 
 # snaps; sadly, installations that have a specific mode can't be grouped together
 snap install kubectl	--classic
@@ -101,12 +102,38 @@ wget \
 unzip -o /usr/share/fonts/truetype/*.zip -d /usr/share/fonts/truetype/
 
 # config; dont delete the following line!
-										cp	  $DOTFILES_DEST/.bashrc	$USERLAND/.bashrc
-mkdir -p $USERLAND/.config/nvim		&&	cp -a $DOTFILES_DEST/nvim/.		$USERLAND/.config/nvim/
-mkdir -p $USERLAND/.config/i3		&&	cp -a $DOTFILES_DEST/i3/.		$USERLAND/.config/i3/
+										cp	  $DOTFILES_DEST/.gterminal.dconf	$USERLAND/.gterminal.dconf
+										cp	  $DOTFILES_DEST/.bashrc			$USERLAND/.bashrc
+mkdir -p $USERLAND/.config/nvim		&&	cp -a $DOTFILES_DEST/nvim/.				$USERLAND/.config/nvim/
+mkdir -p $USERLAND/.config/i3		&&	cp -a $DOTFILES_DEST/i3/.				$USERLAND/.config/i3/
+
+# docker-specific steps
+install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+chmod a+r /etc/apt/keyrings/docker.asc
+
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+apt update
+
+apt install \
+	docker-ce \ 
+	docker-ce-cli \
+	containerd.io \
+	docker-buildx-plugin \
+	docker-compose-plugin
+
+groupadd docker
+usermod -aG docker $USER
+newgrp docker
+systemctl enable docker.service
+systemctl enable containerd.service
 
 # source terminal and shell profiles & updates fonts
 fc-cache -f -v
-dconf load /org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ < gterminal.dconf
+source $USERLAND/.gterminal.dconf
+dconf load /org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ < $USERLAND/.gterminal.dconf
 source $USERLAND/.bashrc
 
