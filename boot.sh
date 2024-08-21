@@ -47,6 +47,7 @@ apt install -y \
 	feh \
 	pulseaudio-utils \
 	i3 \
+	software-properties-common \
 	apt-transport-https \
 	ca-certificates \
 	curl \
@@ -64,15 +65,32 @@ apt install -y \
 snap install kubectl	--classic
 snap install helm		--classic
 snap install terraform	--classic
+snap install code		--classic
+snap install aws-cli	--classic
+snap install go			--classic
 snap install k9s		--devmode
 snap install \
 	postman
 
 ln -s /snap/k9s/current/bin/k9s /snap/bin
 
+# rust
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+
 # pip packages
 pip install \
-	i3-layouts
+	i3-layouts \
+	ranger-fm
+
+# ansible
+add-apt-repository --yes --update ppa:ansible/ansible
+apt update
+apt install -y ansible
+
+# gns3
+#add-apt-repository ppa:gns3/ppa
+#apt update
+#apt install -y gns3-gui gns3-server
 
 # krew
 (
@@ -118,8 +136,8 @@ echo \
   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 apt update
 
-apt install \
-	docker-ce \ 
+apt install -y \
+	docker-ce \
 	docker-ce-cli \
 	containerd.io \
 	docker-buildx-plugin \
