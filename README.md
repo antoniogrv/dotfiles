@@ -1,14 +1,16 @@
 # dotfiles
 
-The following script allows for a quick installation of a bunch of software that I typically use. Fill in the `<username` variable at the end.
+![test](preview/main.png)
+
+The following script allows for a quick installation of a bunch of software that I typically use. Fill in the `<username>` variable at the end.
 
 ```bash
 curl -s https://raw.githubusercontent.com/antoniogrv/dotfiles/master/boot.sh | bash -s <username>
 ```
 
 #### Notes
-- 
-- Everything should already be set up appropriately. If not, figure it out.
+
+- Chances are you'll need to [setup SSH key pairs for version control](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent).
 - `python3`, as well as `pip`, are both in *PATH*. The setup includes `go` and `rustup` too.
 
 #### Cheatsheets
@@ -26,7 +28,7 @@ curl -s https://raw.githubusercontent.com/antoniogrv/dotfiles/master/boot.sh | b
 
 ### Additional
 
-- **Containers**: docker, podman
+- **Containers**: docker
 - **Kubernetes**: kubectl, krew, k9s, helm, minikube, kind
 - **IaC**: terraform, ansible
 - **Cloud**: awscli
@@ -35,6 +37,15 @@ curl -s https://raw.githubusercontent.com/antoniogrv/dotfiles/master/boot.sh | b
 - **Networking**: wireshark, nmap
 - **Utils**: htop, tree, qdirstat ... + *nerd fonts*
 
-### To-do
+## Frequent problems
 
-- add gns3, virtualbox, pipx
+- If the GNOME Terminal profile hasn't set up properly, run the following:
+
+```bash
+dconf load /org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ < /home/<username>/.gterminal.dconf
+```
+
+## To-do
+
+- add gns3, virtualbox, pipx, podman
+- switch to a better terminal emulator

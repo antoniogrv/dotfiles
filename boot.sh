@@ -59,7 +59,8 @@ apt install -y \
 	i3blocks \
 	dconf-editor \
 	python3-pip \
-	dbus-x11
+	dbus-x11 \
+	nmap
 
 # snaps; sadly, installations that have a specific mode can't be grouped together
 snap install kubectl	--classic
@@ -119,11 +120,17 @@ wget \
 # add more fonts here
 unzip -o /usr/share/fonts/truetype/*.zip -d /usr/share/fonts/truetype/
 
-# config; dont delete the following line!
+# config; dont delete the following lines!
 										cp	  $DOTFILES_DEST/.gterminal.dconf	$USERLAND/.gterminal.dconf
 										cp	  $DOTFILES_DEST/.bashrc			$USERLAND/.bashrc
 mkdir -p $USERLAND/.config/nvim		&&	cp -a $DOTFILES_DEST/nvim/.				$USERLAND/.config/nvim/
 mkdir -p $USERLAND/.config/i3		&&	cp -a $DOTFILES_DEST/i3/.				$USERLAND/.config/i3/
+
+# source terminal and shell profiles & updates fonts
+fc-cache -f -v
+source $USERLAND/.gterminal.dconf
+dconf load /org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ < $USERLAND/.gterminal.dconf
+source $USERLAND/.bashrc
 
 # docker-specific steps
 install -m 0755 -d /etc/apt/keyrings
@@ -148,10 +155,3 @@ usermod -aG docker $USER
 newgrp docker
 systemctl enable docker.service
 systemctl enable containerd.service
-
-# source terminal and shell profiles & updates fonts
-fc-cache -f -v
-source $USERLAND/.gterminal.dconf
-dconf load /org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ < $USERLAND/.gterminal.dconf
-source $USERLAND/.bashrc
-
