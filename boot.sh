@@ -79,7 +79,7 @@ wget \
 	https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/JetBrainsMono.zip \
 	-O /usr/share/fonts/truetype/JetBrainsMono.zip
 # add more fonts here
-unzip -o /usr/share/fonts/truetype/*.zip
+unzip -o /usr/share/fonts/truetype/*.zip -d /usr/share/fonts/truetype/
 
 # config; dont delete the following line!
 										cp	  $DOTFILES_DEST/.bashrc	$USERLAND/.bashrc
