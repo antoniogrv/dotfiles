@@ -24,8 +24,7 @@ apt update && apt -y upgrade
 apt install -y git
 
 # clone the dotfiles repository
-ssh-keyscan github.com >> ~/.ssh/known_hosts
-git clone --recurse-submodules -j8 $DOTFILES_ORIGIN $DOTFILES_DEST
+git clone --recursive $DOTFILES_ORIGIN $DOTFILES_DEST
 
 # prevents prompt confirmation by the wireshark installer
 echo "wireshark-common wireshark-common/install-setuid boolean true" | debconf-set-selections
@@ -65,6 +64,17 @@ snap install \
 
 ln -s /snap/k9s/current/bin/k9s /snap/bin
 
+# krew
+(
+  set -x; cd "$(mktemp -d)" &&
+  OS="$(uname | tr '[:upper:]' '[:lower:]')" &&
+  ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')" &&
+  KREW="krew-${OS}_${ARCH}" &&
+  curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/${KREW}.tar.gz" &&
+  tar zxvf "${KREW}.tar.gz" &&
+  ./"${KREW}" install krew
+)
+
 # minikube
 curl -o $USERLAND/minikube.deb https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
 dpkg -i $USERLAND/minikube.deb
@@ -73,6 +83,11 @@ dpkg -i $USERLAND/minikube.deb
 [ $(uname -m) = x86_64 ] && curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.24.0/kind-linux-amd64
 chmod +x ./kind
 mv ./kind /usr/local/bin/kind
+
+# terraform
+wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+sudo apt update && sudo apt install terraform
 
 # fonts
 wget \
