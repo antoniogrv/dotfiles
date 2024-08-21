@@ -33,6 +33,7 @@ echo "wireshark-common wireshark-common/install-setuid boolean true" | debconf-s
 timedatectl set-local-rtc 1
 
 # apt packages
+# note: python is installed as python3
 apt update
 apt install -y \
 	wireshark \
@@ -53,16 +54,24 @@ apt install -y \
 	tree \
 	htop \
 	qdirstat \
-	unzip
+	unzip \
+	i3blocks \
+	dconf-editor \
+	python3-pip
 
 # snaps; sadly, installations that have a specific mode can't be grouped together
-snap install kubectl --classic
-snap install helm --classic
-snap install k9s --devmode
+snap install kubectl	--classic
+snap install helm		--classic
+snap install terraform	--classic
+snap install k9s		--devmode
 snap install \
 	postman
 
 ln -s /snap/k9s/current/bin/k9s /snap/bin
+
+# pip packages
+pip install \
+	i3-layouts
 
 # krew
 (
@@ -84,11 +93,6 @@ dpkg -i $USERLAND/minikube.deb
 chmod +x ./kind
 mv ./kind /usr/local/bin/kind
 
-# terraform
-wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
-echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
-sudo apt update && sudo apt install terraform
-
 # fonts
 wget \
 	https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/JetBrainsMono.zip \
@@ -101,7 +105,8 @@ unzip -o /usr/share/fonts/truetype/*.zip -d /usr/share/fonts/truetype/
 mkdir -p $USERLAND/.config/nvim		&&	cp -a $DOTFILES_DEST/nvim/.		$USERLAND/.config/nvim/
 mkdir -p $USERLAND/.config/i3		&&	cp -a $DOTFILES_DEST/i3/.		$USERLAND/.config/i3/
 
-# source files & updates fonts
+# source terminal and shell profiles & updates fonts
 fc-cache -f -v
+dconf load /org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ < gterminal.dconf
 source $USERLAND/.bashrc
 
