@@ -10,7 +10,7 @@ curl -s https://raw.githubusercontent.com/antoniogrv/dotfiles/master/boot.sh | b
 
 #### Notes
 
-- Chances are you'll need to [setup SSH key pairs for version control](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent).
+- Chances are you'll need to [setup SSH key pairs for version control](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent), and then run some `git config` commands.
 - `python3`, as well as `pip`, are both in *PATH*. The setup includes `go` and `rustup` too.
 
 #### Cheatsheets
@@ -43,6 +43,12 @@ curl -s https://raw.githubusercontent.com/antoniogrv/dotfiles/master/boot.sh | b
 
 ```bash
 dconf load /org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ < /home/<username>/.gterminal.dconf
+```
+
+- If the current user doesn't get added to the `docker` group automatically, run the following:
+
+```bash
+sudo usermod -aG docker $USER && newgrp docker
 ```
 
 ## To-do

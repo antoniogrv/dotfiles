@@ -15,8 +15,6 @@ echo "Dotfiles origin: $DOTFILES_ORIGIN"
 echo "Dotfiles destination: $DOTFILES_DEST"
 echo "Userland: $USERLAND"
 
-systemctl daemon-reload
-
 # update package repositories
 apt update && apt -y upgrade
 
@@ -60,14 +58,17 @@ apt install -y \
 	dconf-editor \
 	python3-pip \
 	dbus-x11 \
-	nmap
+	nmap \
+	ranger \
+	make \
+	gcc
 
 # snaps; sadly, installations that have a specific mode can't be grouped together
-snap install kubectl	--classic
+snap install kubectl		--classic
 snap install helm		--classic
-snap install terraform	--classic
+snap install terraform		--classic
 snap install code		--classic
-snap install aws-cli	--classic
+snap install aws-cli		--classic
 snap install go			--classic
 snap install k9s		--devmode
 snap install \
@@ -75,13 +76,17 @@ snap install \
 
 ln -s /snap/k9s/current/bin/k9s /snap/bin
 
+# additional deps
+mkdir deps
+
+# kube-ps1
+git clone https://github.com/jonmosco/kube-ps1.git deps
+
 # rust
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
 # pip packages
-pip install \
-	i3-layouts \
-	ranger-fm
+pip install i3-layouts --break-system-packages
 
 # ansible
 add-apt-repository --yes --update ppa:ansible/ansible
