@@ -137,6 +137,9 @@ source $USERLAND/.gterminal.dconf
 dconf load /org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ < $USERLAND/.gterminal.dconf
 source $USERLAND/.bashrc
 
+# edit permissions and ownerships
+chown -hR $USER:$USER .dotfiles
+
 # docker-specific steps
 install -m 0755 -d /etc/apt/keyrings
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc

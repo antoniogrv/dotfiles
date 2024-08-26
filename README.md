@@ -12,6 +12,7 @@ curl -s https://raw.githubusercontent.com/antoniogrv/dotfiles/master/boot.sh | b
 
 - Chances are you'll need to [setup SSH key pairs for version control](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent), and then run some `git config` commands.
 - `python3`, as well as `pip`, are both in *PATH*. The setup includes `go` and `rustup` too.
+- If you want to tune up the `.dotfiles` directory, run `sudo chown -hR antonio:antonio .dotfiles` and swap the `origin` remote from HTTPS to SSH [as described here](https://docs.github.com/en/get-started/getting-started-with-git/managing-remote-repositories#changing-a-remote-repositorys-url).
 
 #### Cheatsheets
 
