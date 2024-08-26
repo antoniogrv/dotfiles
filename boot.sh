@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/env bash
 
 # ubuntu2404 setup
 # Please have a look at https://github.com/antoniogrv/dotfiles for more information about what's included.
@@ -61,7 +61,8 @@ apt install -y \
 	nmap \
 	ranger \
 	make \
-	gcc
+	gcc \
+	xdotool
 
 # snaps; sadly, installations that have a specific mode can't be grouped together
 snap install kubectl		--classic
@@ -86,7 +87,7 @@ git clone https://github.com/jonmosco/kube-ps1.git deps
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
 # pip packages
-pip install i3-layouts --break-system-packages
+pip install --user i3-layouts --break-system-packages
 
 # ansible
 add-apt-repository --yes --update ppa:ansible/ansible
@@ -125,6 +126,9 @@ wget \
 # add more fonts here
 unzip -o /usr/share/fonts/truetype/*.zip -d /usr/share/fonts/truetype/
 
+# edit permissions and ownerships
+chown -hR $USER:$USER * 
+
 # config; dont delete the following lines!
 										cp	  $DOTFILES_DEST/.gterminal.dconf	$USERLAND/.gterminal.dconf
 										cp	  $DOTFILES_DEST/.bashrc			$USERLAND/.bashrc
@@ -136,9 +140,6 @@ fc-cache -f -v
 source $USERLAND/.gterminal.dconf
 dconf load /org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ < $USERLAND/.gterminal.dconf
 source $USERLAND/.bashrc
-
-# edit permissions and ownerships
-chown -hR $USER:$USER .dotfiles
 
 # docker-specific steps
 install -m 0755 -d /etc/apt/keyrings

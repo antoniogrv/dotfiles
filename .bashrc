@@ -29,6 +29,9 @@ shopt -s checkwinsize
 
 # load kubectl context and namespace
 source deps/kube-ps1/kube-ps1.sh
+KUBE_PS1_SYMBOL_ENABLE=false
+KUBE_PS1_CTX_COLOR=white
+KUBE_PS1_NS_COLOR=cyan
 kubeon
 
 # make less more friendly for non-text input files, see lesspipe(1)
