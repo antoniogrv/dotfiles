@@ -28,7 +28,7 @@ shopt -s checkwinsize
 #shopt -s globstar
 
 # load kubectl context and namespace
-source deps/kube-ps1/kube-ps1.sh
+source deps/kube-ps1.sh
 KUBE_PS1_SYMBOL_ENABLE=false
 KUBE_PS1_CTX_COLOR=white
 KUBE_PS1_NS_COLOR=cyan
