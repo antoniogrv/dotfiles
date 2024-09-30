@@ -5,7 +5,7 @@
 The following script allows for a quick installation of a bunch of software that I typically use. Fill in the `<username>` variable at the end.
 
 ```bash
-curl -s https://raw.githubusercontent.com/antoniogrv/dotfiles/master/boot.sh | bash -s <username>
+curl -s https://raw.githubusercontent.com/antoniogrv/dotfiles/master/boot.sh | sudo bash -s <username>
 ```
 
 #### Notes
