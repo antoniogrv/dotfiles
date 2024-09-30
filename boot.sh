@@ -66,6 +66,7 @@ apt install -y \
 
 # snaps; sadly, installations that have a specific mode can't be grouped together
 snap install kubectl		--classic
+snap install kubectx		--classic
 snap install helm		--classic
 snap install terraform		--classic
 snap install code		--classic
