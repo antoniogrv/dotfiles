@@ -128,7 +128,7 @@ wget \
 unzip -o /usr/share/fonts/truetype/*.zip -d /usr/share/fonts/truetype/
 
 # edit permissions and ownerships
-chown -hR $USER:$USER * 
+ -hR $USER:$USER * 
 
 # config; dont delete the following lines!
 										cp	  $DOTFILES_DEST/.gterminal.dconf	$USERLAND/.gterminal.dconf
@@ -141,6 +141,8 @@ fc-cache -f -v
 source $USERLAND/.gterminal.dconf
 dconf load /org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ < $USERLAND/.gterminal.dconf
 source $USERLAND/.bashrc
+
+chown $USER .config
 
 # docker-specific steps
 install -m 0755 -d /etc/apt/keyrings
